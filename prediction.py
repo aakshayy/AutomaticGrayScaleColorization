@@ -21,7 +21,6 @@ def predict(svm_classifier,l,centroid,scaler,pca):
 			probabilityVal.append(ans)
 			qnt.append(numpy.where(ans==max(ans))[0][0])
 			print (float)(x*n+y)/(m*n) * 100
-			
 	output = centroid[qnt]
 	output = numpy.array(output)
 	output = numpy.reshape(output,(m,n,2))
@@ -31,4 +30,5 @@ def predict(svm_classifier,l,centroid,scaler,pca):
 	b = numpy.array(b,dtype='uint8')
 
 	img = numpy.squeeze(cv2.merge((l,a,b)))
+	probabilityVal = numpy.array(probabilityVal)
 	return img,probabilityVal

@@ -12,9 +12,10 @@ if __name__=="__main__":
 	t1 = cv2.getTickCount()
 	
 	#Defining constants
-	trainingImagePath = "./Images/1/1.jpg"
-	grayscaleImagePath = "./Images/1/2G.png"
-	outputImagePath = "./Images/1/output.jpg"
+	trainingImagePath = "./Images/3/1.jpg"
+	#trainingImagePath = "./temp/BGRTempOut.jpg"
+	grayscaleImagePath = "./Images/3/1G.jpg"
+	outputImagePath = "./Images/3/output.jpg"
 	#trainingImagePath = "../Trad Database/col.jpg"
 	#grayscaleImagePath = "../Trad Database/bw2.jpg"
 	k = 5
@@ -34,6 +35,10 @@ if __name__=="__main__":
 
 	qab,centroid = quantization(a,b,k)
 	print centroid
+	with open('./temp/centroids', 'w') as csvfile:
+		writer = csv.writer(csvfile)
+		[writer.writerow(r) for r in centroid]
+
 	t2 = cv2.getTickCount()
 	t = (t2 - t1)/cv2.getTickFrequency()
 	print "Time for quantization : ",t," seconds"
@@ -56,7 +61,6 @@ if __name__=="__main__":
 
 	grayscaleImage = cv2.imread(grayscaleImagePath,0)
 	outputTempImage,probabilityValues = predict(svm_classifier,grayscaleImage,centroid,scaler,pca)
-
 	#Writing temporary objects to disk
 	#Remove later
 	cv2.imwrite("./temp/labTempOut.jpg",outputTempImage)
@@ -65,7 +69,7 @@ if __name__=="__main__":
 	with open('./temp/probVal', 'w') as csvfile:
 		writer = csv.writer(csvfile)
 		[writer.writerow(r) for r in probabilityValues]
-
+		
 	outputImage = postProcess(outputTempImage) 
 
 	t5 = cv2.getTickCount()
