@@ -55,4 +55,7 @@ def calculateAccuracy(originalImagePath,predictedImagePath,centroidsPath):
 	cv2.destroyAllWindows()
 
 if __name__ == "__main__":
-	calculateAccuracy("./Images/3/1.jpg","./temp/3/BGRTempOut.jpg","./temp/3/centroids")
+	testCaseNumber = "3"
+	originalImage = "./Images/"+testCaseNumber+"/1.jpg"
+	outputImage = "./Images/"+testCaseNumber+"/output.jpg"
+	calculateAccuracy(originalImage,outputImage,"./temp/"+testCaseNumber+"/centroids")

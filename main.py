@@ -14,9 +14,9 @@ if __name__=="__main__":
 	
 	#Defining constants
 	basePath = "./Images/"
-	testCaseNumber = "1"
+	testCaseNumber = "3"
 	tNo = "1"
-	pNo = "2"
+	pNo = "1"
 	trainingImagePath = basePath+testCaseNumber+"/"+tNo+".jpg"
 	grayscaleImagePath = basePath+testCaseNumber+"/"+pNo+"G.jpg"
 	outputImagePath = basePath+testCaseNumber+"/output.jpg"
@@ -65,17 +65,17 @@ if __name__=="__main__":
 	print "Time for training: ",t," seconds"
 
 	grayscaleImage = cv2.imread(grayscaleImagePath,0)
-	outputTempImage,probabilityValues = predict(svm_classifier,grayscaleImage,centroid,scaler,pca)
+	outputImage,probabilityValues = predict(svm_classifier,grayscaleImage,centroid,scaler,pca)
 	#Writing temporary objects to disk
 	#Remove later
-	cv2.imwrite("./temp/"+testCaseNumber+"/labTempOut.jpg",outputTempImage)
-	outputTempImageBGR = cv2.cvtColor(outputTempImage,cv2.COLOR_LAB2BGR)
+	cv2.imwrite("./temp/"+testCaseNumber+"/labTempOut.jpg",outputImage)
+	outputTempImageBGR = cv2.cvtColor(outputImage,cv2.COLOR_LAB2BGR)
 	cv2.imwrite("./temp/"+testCaseNumber+"/BGRTempOut.jpg",outputTempImageBGR)
 	with open('./temp/'+testCaseNumber+'/probVal', 'w') as csvfile:
 		writer = csv.writer(csvfile)
 		[writer.writerow(r) for r in probabilityValues]
 		
-	outputImage = postProcess(outputTempImage)
+	#outputImage = postProcess(outputImage)
 
 	t5 = cv2.getTickCount()
 	t = (t5 - t4)/cv2.getTickFrequency()
