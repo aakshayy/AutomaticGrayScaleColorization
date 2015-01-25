@@ -1,6 +1,7 @@
 import cv2
 import csv
 import numpy
+import os
 from quant import quantization 
 from getKeyPointFeatures import getKeyPointFeatures
 from training import train
@@ -12,14 +13,18 @@ if __name__=="__main__":
 	t1 = cv2.getTickCount()
 	
 	#Defining constants
-	trainingImagePath = "./Images/3/1.jpg"
-	#trainingImagePath = "./temp/BGRTempOut.jpg"
-	grayscaleImagePath = "./Images/3/1G.jpg"
-	outputImagePath = "./Images/3/output.jpg"
-	#trainingImagePath = "../Trad Database/col.jpg"
-	#grayscaleImagePath = "../Trad Database/bw2.jpg"
+	basePath = "./Images/"
+	testCaseNumber = "1"
+	tNo = "1"
+	pNo = "2"
+	trainingImagePath = basePath+testCaseNumber+"/"+tNo+".jpg"
+	grayscaleImagePath = basePath+testCaseNumber+"/"+pNo+"G.jpg"
+	outputImagePath = basePath+testCaseNumber+"/output.jpg"
 	k = 5
-
+	try:
+		os.stat("./temp/"+testCaseNumber+"/")
+	except:
+		os.mkdir("./temp/"+testCaseNumber+"/")
 	#Reading Training Image
 	trainingImage = cv2.imread(trainingImagePath)
 	trainingImage = cv2.cvtColor(trainingImage,cv2.COLOR_BGR2LAB)
@@ -35,7 +40,7 @@ if __name__=="__main__":
 
 	qab,centroid = quantization(a,b,k)
 	print centroid
-	with open('./temp/centroids', 'w') as csvfile:
+	with open('./temp/'+testCaseNumber+'/centroids', 'w') as csvfile:
 		writer = csv.writer(csvfile)
 		[writer.writerow(r) for r in centroid]
 
@@ -63,14 +68,14 @@ if __name__=="__main__":
 	outputTempImage,probabilityValues = predict(svm_classifier,grayscaleImage,centroid,scaler,pca)
 	#Writing temporary objects to disk
 	#Remove later
-	cv2.imwrite("./temp/labTempOut.jpg",outputTempImage)
+	cv2.imwrite("./temp/"+testCaseNumber+"/labTempOut.jpg",outputTempImage)
 	outputTempImageBGR = cv2.cvtColor(outputTempImage,cv2.COLOR_LAB2BGR)
-	cv2.imwrite("./temp/BGRTempOut.jpg",outputTempImageBGR)
-	with open('./temp/probVal', 'w') as csvfile:
+	cv2.imwrite("./temp/"+testCaseNumber+"/BGRTempOut.jpg",outputTempImageBGR)
+	with open('./temp/'+testCaseNumber+'/probVal', 'w') as csvfile:
 		writer = csv.writer(csvfile)
 		[writer.writerow(r) for r in probabilityValues]
 		
-	outputImage = postProcess(outputTempImage) 
+	outputImage = postProcess(outputTempImage)
 
 	t5 = cv2.getTickCount()
 	t = (t5 - t4)/cv2.getTickFrequency()
