@@ -1,4 +1,5 @@
 import cv2
+import csv
 import numpy
 from quant import quantization 
 from getKeyPointFeatures import getKeyPointFeatures
@@ -11,9 +12,9 @@ if __name__=="__main__":
 	t1 = cv2.getTickCount()
 	
 	#Defining constants
-	trainingImagePath = "./Images/3/1.jpg"
-	grayscaleImagePath = "./Images/3/1G.jpg"
-	outputImagePath = "./Images/3/output.jpg"
+	trainingImagePath = "./Images/1/1.jpg"
+	grayscaleImagePath = "./Images/1/2G.png"
+	outputImagePath = "./Images/1/output.jpg"
 	#trainingImagePath = "../Trad Database/col.jpg"
 	#grayscaleImagePath = "../Trad Database/bw2.jpg"
 	k = 5
@@ -54,8 +55,19 @@ if __name__=="__main__":
 	print "Time for training: ",t," seconds"
 
 	grayscaleImage = cv2.imread(grayscaleImagePath,0)
-	outputTempImage = predict(svm_classifier,grayscaleImage,centroid,scaler,pca)
-	outputImage = postProcessing(outputTempImage) 
+	outputTempImage,probabilityValues = predict(svm_classifier,grayscaleImage,centroid,scaler,pca)
+
+	#Writing temporary objects to disk
+	#Remove later
+	cv2.imwrite("./temp/labTempOut.jpg",outputTempImage)
+	outputTempImageBGR = cv2.cvtColor(outputTempImage,cv2.COLOR_LAB2BGR)
+	cv2.imwrite("./temp/BGRTempOut.jpg",outputTempImageBGR)
+	with open('./temp/probVal', 'w') as csvfile:
+		writer = csv.writer(csvfile)
+		[writer.writerow(r) for r in probabilityValues]
+
+	outputImage = postProcess(outputTempImage) 
+
 	t5 = cv2.getTickCount()
 	t = (t5 - t4)/cv2.getTickFrequency()
 	print "Time for prediction : ",t," seconds"	

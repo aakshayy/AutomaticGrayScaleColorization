@@ -8,7 +8,7 @@ def predict(svm_classifier,l,centroid,scaler,pca):
 	m,n = l.shape
 	qnt = []
 	k = len(centroid)
-	ans = []
+	probabilityVal = []
 	surfDescriptorExtractor = cv2.DescriptorExtractor_create("SURF")
 	for x in range(m):
 		for y in range(n):
@@ -18,8 +18,10 @@ def predict(svm_classifier,l,centroid,scaler,pca):
 			ans = []
 			for z in range(k):
 				ans.append(svm_classifier[z].decision_function(feat)[0][0])
+			probabilityVal.append(ans)
 			qnt.append(numpy.where(ans==max(ans))[0][0])
 			print (float)(x*n+y)/(m*n) * 100
+			
 	output = centroid[qnt]
 	output = numpy.array(output)
 	output = numpy.reshape(output,(m,n,2))
@@ -29,8 +31,4 @@ def predict(svm_classifier,l,centroid,scaler,pca):
 	b = numpy.array(b,dtype='uint8')
 
 	img = numpy.squeeze(cv2.merge((l,a,b)))
-	cv2.imwrite("./temp/tempOutput.jpg",img)
-	return img
-	'''with open('./temp/output', 'w') as csvfile:
-		writer = csv.writer(csvfile)
-		[writer.writerow(r) for r in output]'''
+	return img,probabilityVal
