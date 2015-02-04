@@ -40,6 +40,5 @@ def resizeImage(image):
 	return cv2.resize(image,(0,0),fx=resizeFactor,fy=resizeFactor)
 
 if __name__ == "__main__":
-	pass
-	#createFolderTest(["./temp/mountain1.jpeg","./temp/mountain2.jpeg"])
+	createFolderTest(["./temp/legos1.jpg"])
 	#createFolderTest(["./temp/abc.jpg"])

@@ -14,9 +14,9 @@ if __name__=="__main__":
 	
 	#Defining constants
 	basePath = "./Images/"
-	testCaseNumber = "3"
+	testCaseNumber = "10"
 	tNo = "1"
-	pNo = "1"
+	pNo = "2"
 	trainingImagePath = basePath+testCaseNumber+"/"+tNo+".jpg"
 	grayscaleImagePath = basePath+testCaseNumber+"/"+pNo+"G.jpg"
 	outputImagePath = basePath+testCaseNumber+"/output.jpg"
@@ -50,9 +50,11 @@ if __name__=="__main__":
 	
 
 	feat,classes = getKeyPointFeatures(l,qab)
+	print "Length of feature descriptor before PCA : ",len(feat[0])
 	feat = scaler.fit_transform(feat)
 	feat = pca.fit_transform(feat)
-
+	print "Length of feature descriptor after PCA : ",len(feat[0])
+	cv2.waitKey()
 	
 	t3 = cv2.getTickCount()
 	t = (t3 - t2)/cv2.getTickFrequency()
@@ -75,7 +77,7 @@ if __name__=="__main__":
 		writer = csv.writer(csvfile)
 		[writer.writerow(r) for r in probabilityValues]
 		
-	#outputImage = postProcess(outputImage)
+	outputImage = postProcess(outputImage,centroid,probabilityValues)
 
 	t5 = cv2.getTickCount()
 	t = (t5 - t4)/cv2.getTickFrequency()

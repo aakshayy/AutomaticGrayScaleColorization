@@ -10,6 +10,7 @@ def predict(svm_classifier,l,centroid,scaler,pca):
 	k = len(centroid)
 	probabilityVal = []
 	surfDescriptorExtractor = cv2.DescriptorExtractor_create("SURF")
+	surfDescriptorExtractor.setBool('extended', True)
 	for x in range(m):
 		for y in range(n):
 			feat = [extractFeatures(l,x,y,surfDescriptorExtractor)]

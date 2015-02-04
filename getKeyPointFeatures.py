@@ -4,6 +4,7 @@ from feat import extractFeatures
 def getKeyPointFeatures(l,ab):
 	m,n = l.shape
 	surfDescriptorExtractor = cv2.DescriptorExtractor_create("SURF")
+	surfDescriptorExtractor.setBool('extended', True)
 	keyPointFeat = []
 	classes = []
 	numberOfKeyPoints = 5000
