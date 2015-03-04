@@ -11,6 +11,7 @@ def predict(svm_classifier,l,centroid,scaler,pca):
 	probabilityVal = []
 	surfDescriptorExtractor = cv2.DescriptorExtractor_create("SURF")
 	surfDescriptorExtractor.setBool('extended', True)
+	next_percent = 0
 	for x in range(m):
 		for y in range(n):
 			feat = [extractFeatures(l,x,y,surfDescriptorExtractor)]
@@ -21,7 +22,10 @@ def predict(svm_classifier,l,centroid,scaler,pca):
 				ans.append(svm_classifier[z].decision_function(feat)[0][0])
 			probabilityVal.append(ans)
 			qnt.append(numpy.where(ans==max(ans))[0][0])
-			print (float)(x*n+y)/(m*n) * 100
+			if( (float)(x*n+y)/(m*n) * 100 >= next_percent):
+				print  "Percentage completed : ",next_percent,"%"
+				next_percent = next_percent +1
+	print "Percentage completed : 100 %"
 	output = centroid[qnt]
 	output = numpy.array(output)
 	output = numpy.reshape(output,(m,n,2))

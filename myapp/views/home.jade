@@ -39,8 +39,8 @@ html(lang='en')
               a(href='#page-top')
             li.page-scroll
               a(href='#portfolio') How it Works
-            li.page-scroll
-              a(href='#about') About
+            //li.page-scroll
+            //  a(href='#about') About
             li.page-scroll
               a(href='#contact') Try Now
         // /.navbar-collapse
@@ -85,23 +85,23 @@ html(lang='en')
               img.img-responsive(src='/images/ppg/ppg1.jpg', alt='')
             h3(style='text-align:center;') SOMETHING COOL ABOUT AUTOMATIC COLORIZATION
     // About Section
-    section#about.success
-      .container
-        .row
-          .col-lg-12.text-center
-            h2 About
-            hr.star-light
-        .row
-          .col-lg-4.col-lg-offset-2
-            p
-              | Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional LESS stylesheets for easy customization.
-          .col-lg-4
-            p
-              | Whether you're a student looking to showcase your work, a professional looking to attract clients, or a graphic artist looking to share your projects, this template is the perfect starting point!
-          .col-lg-8.col-lg-offset-2.text-center
-            a.btn.btn-lg.btn-outline(href='#')
-              i.fa.fa-download
-              |  Download Theme
+    //section#about.success
+    //  .container
+    //    .row
+    //      .col-lg-12.text-center
+    //        h2 About
+    //        hr.star-light
+    //    .row
+    //      .col-lg-4.col-lg-offset-2
+    //        p
+    //          | Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional LESS stylesheets for easy customization.
+    //      .col-lg-4
+    //        p
+    //          | Whether you're a student looking to showcase your work, a professional looking to attract clients, or a graphic artist looking to share your projects, this template is the perfect starting point!
+    //      .col-lg-8.col-lg-offset-2.text-center
+    //        a.btn.btn-lg.btn-outline(href='#')
+    //          i.fa.fa-download
+    //          |  Download Theme
     // Contact Section
     section#contact
       .container
@@ -111,31 +111,40 @@ html(lang='en')
             hr.star-primary
         .row
           .col-lg-8.col-lg-offset-2
-            // To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19.
-            // The form should work on most web servers, but if the form is not working you may need to configure your web server differently.
-            form#contactForm(name='sentMessage', novalidate='')
+            form#contactForm(action='/mail/upload', enctype='multipart/form-data', method='post')
               .row.control-group
-                //
-                  <div class="form-group col-xs-12 floating-label-form-group controls">
                 .form-group
                   label Upload a training image
-                  input.uploadFile(type='file', placeholder='Training Image', required='', data-validation-required-message='Please upload a valid image file.', accept='image/*')
+                  input(multiple='multiple',name='upload1',type='file', placeholder='Training Image', required='', data-validation-required-message='Please upload a valid image file.', accept='image/*')
                   p.help-block.text-danger
+          
               .row.control-group
                 .form-group
                   label Upload target grayscale image
-                  input.uploadFile(type='file', placeholder='Target Image', required='', data-validation-required-message='Please upload a valid image file.', accept='image/*')
+                  input(multiple='multiple',name='upload2',type='file', placeholder='Target Image', required='', data-validation-required-message='Please upload a valid image file.', accept='image/*')
                   p.help-block.text-danger
-              .row.control-group
-                .form-group
-                  label Email Address
-                  input#email.form-control(type='email', placeholder='Email Address', required='', data-validation-required-message='Please enter your email address.')
-                  p.help-block.text-danger
+              //.row.control-group
+              //  .form-group
+              //    label Email Address
+              //    input(type='email', placeholder='Email Address',name='eid', required='', data-validation-required-message='Please enter your email address.')
+              //    p.help-block.text-danger
+              //.col-sm-4.portfolio-item
+              //  .portfolio-link(href='#portfolioModal1', data-toggle='modal')
+              //    img.img-responsive(src='/images/ppg/ppg0.jpg', alt='')
+              //  h3(style='text-align:center;') Training Image
+              //.col-sm-4.portfolio-item
+              //  .portfolio-link(href='#portfolioModal1', data-toggle='modal')
+              //    img.img-responsive(src='/images/ppg/ppg0.jpg', alt='')
+              //  h3(style='text-align:center;') Target Image
+              //.col-sm-4.portfolio-item
+              //  .portfolio-link(href='#portfolioModal1', data-toggle='modal')
+              //    img.img-responsive(src='/images/ppg/ppg0.jpg', alt='')
+              //  h3(style='text-align:center;') Colored Image
               br
               #success
               .row
                 .form-group.col-xs-12
-                  button.btn.btn-success.btn-lg(type='submit') Send
+                  button.btn.btn-success.btn-lg(type='submit') Color it Now
     // Footer
     footer.text-center
       .footer-below
@@ -156,7 +165,7 @@ html(lang='en')
     script(src='js/classie.js')
     script(src='js/cbpAnimatedHeader.js')
     // Contact Form JavaScript
-    script(src='js/jqBootstrapValidation.js')
-    script(src='js/contact_me.js')
+    //script(src='js/jqBootstrapValidation.js')
+    //script(src='js/contact_me.js')
     // Custom Theme JavaScript
     script(src='js/freelancer.js')

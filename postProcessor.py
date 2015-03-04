@@ -7,6 +7,7 @@ def postProcess(img,centroids,probVal,blur=15):
 	a = cv2.medianBlur(a, blur)
 	b = cv2.medianBlur(b, blur)
 	output = cv2.merge((l,a,b))
+	output = cv2.cvtColor(output,cv2.COLOR_LAB2BGR)
 	return output
 
 if __name__ == "__main__":
